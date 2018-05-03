@@ -1,0 +1,40 @@
+<!--
+  Generated template for the AddPostPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Legg ut annonse</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-label fixed>Tittel</ion-label>
+      <ion-input placeholder="Tittel" [(ngModel)]="postTitle"></ion-input>
+    </ion-row>
+    <ion-row>
+      <ion-label fixed>Beskrivelse</ion-label>
+      <ion-input placeholder="Skriv om bøkene" [(ngModel)]="postText"></ion-input>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button (click)="executeCamera()">Ta bilde</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button (click)="addPost()">Post annonsen</button>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <img style="height: 300px" [src]="'data:image/jpeg;base64,' + previewImage" />
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

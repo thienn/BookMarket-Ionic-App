@@ -40,6 +40,12 @@ export class HomePage {
     })
   }
 
+  goToAddPostPage() {
+    this.navCtrl.push('AddPostPage', {
+      postCollection: this.collection
+    })
+  }
+
   logout() {
     this.af.app.auth().signOut();
   }
