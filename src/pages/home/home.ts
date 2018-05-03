@@ -33,6 +33,13 @@ export class HomePage {
 
   }
 
+  goToDetailPage(post: Post) {
+    this.navCtrl.push('DetailPage', {
+      post,
+      postCollection: this.collection
+    })
+  }
+
   logout() {
     this.af.app.auth().signOut();
   }

@@ -20,10 +20,9 @@
       <ion-thumbnail item-start>
           <img src="">
       </ion-thumbnail>
-     
       <h2>Title</h2>
       <p> {{post.body}}</p>
-      <button ion-button clear item-end>View</button>
+      <button ion-button clear item-end (click)="goToDetailPage(post)">View</button>
     </ion-item>
   </ion-list>
 </ion-content>
