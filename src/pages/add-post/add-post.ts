@@ -7,6 +7,8 @@ import { AngularFireStorage } from 'angularfire2/storage';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 
 import { Post } from '../../models/Post';
+import { PlacesProvider } from '../../providers/places/places';
+import { Geolocation } from '@ionic-native/geolocation';
 
 /**
  * Generated class for the AddPostPage page.
@@ -26,7 +28,11 @@ export class AddPostPage {
   public postBody: string =""; //Empty placeholder that will be the string that get sent to Firebase as content of post (body)
   private previewImage: string = ""; 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private camera: Camera, private afStorage: AngularFireStorage, private af: AngularFirestore) {
+  public location: { latitude: number, longitude: number } = { latitude: 0, longitude: 0 }; //Basis for location before getting coordinates
+  private placeAddress: string = "";
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private camera: Camera, private afStorage: AngularFireStorage, private af: AngularFirestore,
+  private geolocation: Geolocation, private placesProvider: PlacesProvider) {
     this.postCollection = navParams.get('postCollection');
   }
 
@@ -47,7 +53,6 @@ export class AddPostPage {
       // Here the app listen to when the picture is done uploading. When it is, get access to the picture's
       // URL on the server Firebase
       uploadEvent.subscribe((uploadImageUrl) => {
-
         this.postCollection.add({
           title: this.postTitle, // Title to the post
           body: this.postBody, // Specify the description / body of the content
@@ -61,8 +66,6 @@ export class AddPostPage {
           }).present();
         })
       });
-
-
   }
 
   executeCamera() {
@@ -75,6 +78,20 @@ export class AddPostPage {
     .then(imgBase64 => {
      this.previewImage = imgBase64;
     });
+  }
+
+  findGeolocation() {
+    this.geolocation.getCurrentPosition()
+      .then(location => {
+        this.placesProvider.getPlaceBasedOnLatLng(
+          location.coords.latitude,
+          location.coords.longitude
+        ).then((place: any) => {
+          this.placeAddress = place.results[1].formatted_address;
+        });
+      }).catch(error => {
+        console.error(error);
+      });
   }
 
  

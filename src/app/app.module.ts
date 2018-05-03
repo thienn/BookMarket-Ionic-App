@@ -14,9 +14,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import { Camera } from '@ionic-native/camera';
+import { PlacesProvider } from '../providers/places/places';
+import { Geolocation } from '@ionic-native/geolocation';
+import { HttpClientModule } from '@angular/common/http';
 
 import env from '../env';
-import { PlacesProvider } from '../providers/places/places';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { PlacesProvider } from '../providers/places/places';
     AngularFireModule.initializeApp(env),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -42,7 +46,8 @@ import { PlacesProvider } from '../providers/places/places';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthorizeProvider,
     Camera,
-    PlacesProvider
+    PlacesProvider,
+    Geolocation
   ]
 })
 export class AppModule {}
