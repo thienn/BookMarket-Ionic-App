@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthorizeProvider } from '../../providers/authorize/authorize';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 /**
  * Generated class for the LoginPage page.
@@ -16,15 +17,37 @@ import { AuthorizeProvider } from '../../providers/authorize/authorize';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-  
-  loginUser() {
-    this.loginUser();
+  public user = {
+    username: "",
+    password: ""
   }
 
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFirestore) {
+  }
+  
+  // Login
+  loginUser() {
+    this.af.app.auth()
+    .signInWithEmailAndPassword(this.user.username, this.user.password)
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.error(error);
+    })
+  }
+
+  // Register
   registerUser() {
-    this.registerUser();
+    this.af.app.auth()
+      .createUserWithEmailAndPassword(this.user.username, this.user.password)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.error(error);
+      })
   }
 
   ionViewDidLoad() {
