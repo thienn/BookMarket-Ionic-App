@@ -16,15 +16,15 @@
 <ion-content padding>
     Title
 
-  <!-- <img [src]="post.imgUrl" /> -->
-
-  <!--
+    <img [src]="" /> 
+    <p>Kontakt Info: Navn - <ion-icon name="call"></ion-icon> Ring  <ion-icon name="chatbubbles"></ion-icon> PM </p> 
+  
   <ion-list>
     <ion-item *ngFor="let comment of comments | async">
      {{comment.comment}} 
     </ion-item>
-  </ion-list>
+  </ion-list>  
 
-  <ion-input [(ngModel)]="commentText"></ion-input> -->
+  <ion-input [(ngModel)]="commentText"></ion-input> 
   <button ion-button (click)="addComment()">Post comment</button>
 </ion-content>
