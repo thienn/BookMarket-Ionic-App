@@ -65,6 +65,18 @@ export class AddPostPage {
 
   }
 
+  executeCamera() {
+    this.camera.getPicture({
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      cameraDirection: this.camera.Direction.BACK,
+      correctOrientation: true
+    })
+    .then(imgBase64 => {
+     this.previewImage = imgBase64;
+    });
+  }
+
  
 
 }

@@ -14,10 +14,13 @@
 
 
 <ion-content padding>
-    Title
+    {{post.title}}
 
-    <img [src]="" /> 
-    <p>Kontakt Info: Navn - <ion-icon name="call"></ion-icon> Ring  <ion-icon name="chatbubbles"></ion-icon> PM </p> 
+    <img [src]="post.imgUrl" /> 
+
+    {{post.body}}
+
+    <p>Kontakt Info: Navn: {{post.author}} <ion-icon name="call"></ion-icon> Ring  <ion-icon name="chatbubbles"></ion-icon> PM </p> 
   
   <ion-list>
     <ion-item *ngFor="let comment of comments | async">
