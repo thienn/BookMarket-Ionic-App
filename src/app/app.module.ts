@@ -16,6 +16,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { Camera } from '@ionic-native/camera';
 
 import env from '../env';
+import { PlacesProvider } from '../providers/places/places';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import env from '../env';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthorizeProvider,
-    Camera
+    Camera,
+    PlacesProvider
   ]
 })
 export class AppModule {}
