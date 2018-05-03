@@ -44,17 +44,17 @@ export class AddPostPage {
     // Then make an event which the app can use to listen to when the picture is done uploading
     let uploadEvent = task.downloadURL();
 
-          // Here the app listen to when the picture is done uploading. When it is, get access to the picture's
+      // Here the app listen to when the picture is done uploading. When it is, get access to the picture's
       // URL on the server Firebase
       uploadEvent.subscribe((uploadImageUrl) => {
 
         this.postCollection.add({
-          title: this.postTitle,
-          body: this.postBody,
+          title: this.postTitle, // Title to the post
+          body: this.postBody, // Specify the description / body of the content
           author: this.af.app.auth().currentUser.email, // specify that the author is the email of the user
           imgUrl: uploadImageUrl // here program send the URL to picture we just uploaded with the post. So we can show it up the "feed"
         } as Post).then(() => {
-          // When the picture is uploaded we are in .then and can dismiss the loading screen
+          // When done toast message about it
           this.toast.create({
             message: "Done posting",
             duration: 2500
