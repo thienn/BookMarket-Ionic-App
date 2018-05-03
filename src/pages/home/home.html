@@ -7,8 +7,18 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-list>
+    <ion-item *ngFor="let post of posts | async">
+      {{post.body}}
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<!--
+<ion-content>
+    <ion-list class="image-view" no-lines>
+      <img [src]="post.imgUrl" *ngFor="let post of posts | async" (click)="goToDetailPage(post)" />
+    </ion-list>
+</ion-content>
+
+-->
