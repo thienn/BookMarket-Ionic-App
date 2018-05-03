@@ -59,6 +59,12 @@ export class AddPostPage {
           author: this.af.app.auth().currentUser.email, // specify that the author is the email of the user
           imgUrl: uploadImageUrl // here program send the URL to picture we just uploaded with the post. So we can show it up the "feed"
         } as Post).then(() => {
+
+          // Reset all the fields in case the user want to post new one after
+          this.postTitle = "";
+          this.postBody = "";
+          this.previewImage = "";
+
           // When done toast message about it
           this.toast.create({
             message: "Done posting",

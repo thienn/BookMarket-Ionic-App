@@ -43,6 +43,10 @@ export class DetailPage {
       .add({
         comment: this.commentText
       })
+      .then(() => {
+        // Reset the comment field if the post go through successfully
+        this.commentText = "";
+      })
   }  
 
 }
