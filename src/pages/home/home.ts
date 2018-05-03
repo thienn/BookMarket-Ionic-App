@@ -33,4 +33,8 @@ export class HomePage {
 
   }
 
+  logout() {
+    this.af.app.auth().signOut();
+  }
+
 }

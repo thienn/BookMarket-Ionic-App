@@ -1,15 +1,29 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Marked
     </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="goToAddPostPage()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+      <button ion-button (click)="logout()">
+        <ion-icon name="exit"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let post of posts | async">
-      {{post.body}}
+      <ion-thumbnail item-start>
+          <img src="">
+      </ion-thumbnail>
+     
+      <h2>Title</h2>
+      <p> {{post.body}}</p>
+      <button ion-button clear item-end>View</button>
     </ion-item>
   </ion-list>
 </ion-content>
