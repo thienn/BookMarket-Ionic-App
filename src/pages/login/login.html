@@ -7,12 +7,27 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>login</ion-title>
+    <ion-title>Login Page</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <ion-label fixed>Username</ion-label>
+        <ion-input type="text" [(ngModel)]="user.username"></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-label fixed>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+      </ion-row>
+      <ion-row>
+        <button block ion-button (click)="loginUser()">Logg inn</button>
+        <button block ion-button (click)="registerUser()">Registrer</button>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
 </ion-content>
