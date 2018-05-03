@@ -11,6 +11,9 @@ import { AuthorizeProvider } from '../providers/authorize/authorize';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+
+import { Camera } from '@ionic-native/camera';
 
 import env from '../env';
 
@@ -24,7 +27,8 @@ import env from '../env';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(env),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,7 +39,8 @@ import env from '../env';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthorizeProvider
+    AuthorizeProvider,
+    Camera
   ]
 })
 export class AppModule {}
