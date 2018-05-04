@@ -49,10 +49,11 @@ export class AddPostPage {
 
     // Then make an event which the app can use to listen to when the picture is done uploading
     let uploadEvent = task.downloadURL();
-
+    
       // Here the app listen to when the picture is done uploading. When it is, get access to the picture's
       // URL on the server Firebase
       uploadEvent.subscribe((uploadImageUrl) => {
+        console.log(uploadImageUrl) // Currently app sometimes connect the URL to the post and sometimes not. Either due to reset or API key havent gotten down to it 100% yet Going to test both more
         this.postCollection.add({
           title: this.postTitle, // Title to the post
           body: this.postBody, // Specify the description / body of the content
