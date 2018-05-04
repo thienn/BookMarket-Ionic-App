@@ -27,13 +27,13 @@ export class AddPostPage {
   public postTitle: string =""; //Empty placeholder that will be the string that get sent to Firebase as title of post
   public postBody: string =""; //Empty placeholder that will be the string that get sent to Firebase as content of post (body)
   private previewImage: string = ""; 
-
+  
   public location: { latitude: number, longitude: number } = { latitude: 0, longitude: 0 }; //Basis for location before getting coordinates
   private placeAddress: string = "";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private camera: Camera, private afStorage: AngularFireStorage, private af: AngularFirestore,
   private geolocation: Geolocation, private placesProvider: PlacesProvider) {
-    this.postCollection = navParams.get('postCollection');
+    this.postCollection = navParams.get('postCollection');    
   }
 
   addPost() {
