@@ -40,7 +40,10 @@ export class AddPostPage {
 
     // Generate a filename for the picture we are going to upload, based on login email and seconds in UNIX phone time (1.1.1970)
     //  let imageFileName = '${this.af.app.auth().currentUser.email}_${new Date().getTime()}.png';
+    /*
     let imageFileName = `${this.af.app.auth().currentUser.email}_${new Date().getTime()}.png`;
+    */
+   let imageFileName = `${this.af.firestore.app.auth().currentUser.email}_${new Date().getTime()}.png`;
 
     // Then make a task that takes care of the uploading
     let task = this.afStorage

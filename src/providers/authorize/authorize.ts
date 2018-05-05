@@ -22,7 +22,7 @@ export class AuthorizeProvider {
   }
 
   // Similar setup on both, just using different call. Try / catch method for success & error if something goes wrong. Rest is handled by the Firestore module
-
+  /*
   // Login
   loginUser() {
     this.af.app.auth()
@@ -46,6 +46,6 @@ export class AuthorizeProvider {
         console.error(error);
       })
   }
-
+  */
 
 }
