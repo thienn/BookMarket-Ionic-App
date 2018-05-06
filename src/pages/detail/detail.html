@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Title replace</ion-title>
+    <ion-title>{{post.title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -43,6 +43,7 @@
     
       <ion-card-content>
         <p>{{post.body}}</p>
+        <p *ngIf="post.price != null">Pris: {{post.price}} kr</p> <!-- Only show if there any value / not null. -->
       </ion-card-content>
     
       <ion-row>

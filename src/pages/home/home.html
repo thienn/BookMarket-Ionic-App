@@ -22,6 +22,7 @@
       </ion-thumbnail>
       <h2>{{post.title}}</h2>
       <p> {{post.body}}</p>
+      <p *ngIf="post.price != null"> {{post.price}} Kr</p>
       <button ion-button clear item-end (click)="goToDetailPage(post)">View</button>
     </ion-item>
   </ion-list>

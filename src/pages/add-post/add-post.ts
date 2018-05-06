@@ -26,6 +26,7 @@ export class AddPostPage {
   public postCollection: AngularFirestoreCollection<Post>;
   public postTitle: string =""; //Empty placeholder that will be the string that get sent to Firebase as title of post
   public postBody: string =""; //Empty placeholder that will be the string that get sent to Firebase as content of post (body)
+  public postPrice: string ="";
   private previewImage: string = ""; 
   
   public location: { latitude: number, longitude: number } = { latitude: 0, longitude: 0 }; //Basis for location before getting coordinates
@@ -60,6 +61,7 @@ export class AddPostPage {
         this.postCollection.add({
           title: this.postTitle, // Title to the post
           body: this.postBody, // Specify the description / body of the content
+          price: this.postPrice,
           author: this.af.app.auth().currentUser.email, // specify that the author is the email of the user
           imgUrl: uploadImageUrl // here program send the URL to picture we just uploaded with the post. So we can show it up the "feed"
         } as Post).then(() => {
@@ -67,6 +69,7 @@ export class AddPostPage {
           // Reset all the fields in case the user want to post new one after
           this.postTitle = "";
           this.postBody = "";
+          this.postPrice = "";
           this.previewImage = "";
 
           // When done toast message about it

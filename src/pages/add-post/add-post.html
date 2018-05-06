@@ -24,6 +24,10 @@
       <ion-input placeholder="Skriv om bøkene" [(ngModel)]="postBody"></ion-input>
     </ion-row>
     <ion-row>
+        <ion-label fixed>Pris</ion-label>
+        <ion-input placeholder="kr" [(ngModel)]="postPrice"></ion-input>
+    </ion-row>
+    <ion-row>
       <ion-col>
         <button ion-button (click)="executeCamera()">Ta bilde</button>
       </ion-col>
