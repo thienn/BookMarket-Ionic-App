@@ -14,6 +14,7 @@
 
 
 <ion-content padding>
+  <!--
     {{post.title}}
 
     <img [src]="post.imgUrl" /> 
@@ -30,4 +31,56 @@
 
   <ion-input placeholder="Skriv kommentar.." [(ngModel)]="commentText"></ion-input> 
   <button ion-button (click)="addComment()">Post comment</button>
+  -->
+
+  <ion-card>
+
+      <ion-item>
+        <h2>{{post.title}}</h2>
+      </ion-item>
+    
+      <img [src]="post.imgUrl">
+    
+      <ion-card-content>
+        <p>{{post.body}}</p>
+      </ion-card-content>
+    
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="call"></ion-icon>
+            <div>Ring</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="chatbubbles"></ion-icon>
+            <div>Melding</div>
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <ion-note>
+            Område: Stovner
+          </ion-note>
+        </ion-col>
+      </ion-row>
+    
+    </ion-card>
+
+    <ion-card>
+        <ion-list>
+            <ion-item>
+                <h2>Kommentarer: </h2>
+              </ion-item>
+            <ion-item *ngFor="let comment of comments | async">
+             {{comment.comment}} 
+            </ion-item>
+          </ion-list>  
+          <ion-item>
+              <ion-input placeholder="Skriv kommentar.." [(ngModel)]="commentText"></ion-input> 
+          </ion-item>
+          <ion-item>
+              <button ion-button (click)="addComment()">Post kommentar</button>
+          </ion-item>
+    </ion-card>
 </ion-content>
