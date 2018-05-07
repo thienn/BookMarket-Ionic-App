@@ -32,8 +32,8 @@
         </ion-header>
         <ion-content>
           <ion-list>
-            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-              {{p.title}}
+            <button menuClose ion-item *ngFor="let page of pages" (click)="openPage(page)">
+              {{page.title}}
             </button>
             <!-- Statisk knapp for å stenge menyen uten å bytte side. Denne utenfor Array'et for at det alltid skal være der som siste objekt og ingen grunn til at det skal være inne -->
             <button ion-item menuClose>
