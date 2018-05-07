@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
+import { MyPostsPage } from '../pages/my-posts/my-posts';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
@@ -11,10 +12,15 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class MyApp {
   // rootPage:any = HomePage;
-  rootPage: any;
+  rootPage: any = HomePage;
+  // Import from child since MyApp doesn't have it's own NavController
+  @ViewChild(Nav) nav: Nav;
+
+  pages: Array<{title: string, component: any}>;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, af: AngularFirestore) {
 
+    /*
     const authObserver = af.app.auth().onAuthStateChanged(
       (user) => {
 
@@ -25,6 +31,12 @@ export class MyApp {
         }
       }
     )
+    */
+    // List of pages that can be navigated to
+    this.pages = [
+      { title: 'Hjem / annonser', component: HomePage },
+      { title: 'Mine annonser', component: MyPostsPage}
+    ];
 
 
 
@@ -35,6 +47,12 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+
+  }
+
+  openPage(page){
+   // this.navCtrl.push(homePage)
+    this.nav.setRoot(page.component);
   }
 }
 
