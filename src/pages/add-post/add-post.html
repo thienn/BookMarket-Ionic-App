@@ -25,11 +25,14 @@
     </ion-row>
     <ion-row>
         <ion-label fixed>Pris</ion-label>
-        <ion-input placeholder="kr" [(ngModel)]="postPrice"></ion-input>
+        <ion-input type="number" placeholder="kr" [(ngModel)]="postPrice"></ion-input>
     </ion-row>
     <ion-row>
       <ion-col>
         <button ion-button (click)="executeCamera()">Ta bilde</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button (click)="findGeolocation()">Område</button>
       </ion-col>
       <ion-col>
         <button ion-button (click)="addPost()">Post annonsen</button>
@@ -38,6 +41,11 @@
     
     <ion-row>
       <img style="height: 300px" [src]="'data:image/jpeg;base64,' + previewImage" />
+    </ion-row>
+    <ion-row>
+      <p>
+        Hentet Område: {{placeAddress}}
+      </p>
     </ion-row>
 
   </ion-grid>

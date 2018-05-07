@@ -62,8 +62,9 @@ export class AddPostPage {
           title: this.postTitle, // Title to the post
           body: this.postBody, // Specify the description / body of the content
           price: this.postPrice,
+          placeAddress: this.placeAddress,
           author: this.af.app.auth().currentUser.email, // specify that the author is the email of the user
-          imgUrl: uploadImageUrl // here program send the URL to picture we just uploaded with the post. So we can show it up the "feed"
+          imgUrl: uploadImageUrl, // here program send the URL to picture we just uploaded with the post. So we can show it up the "feed"
         } as Post).then(() => {
 
           // Reset all the fields in case the user want to post new one after
@@ -71,6 +72,7 @@ export class AddPostPage {
           this.postBody = "";
           this.postPrice = "";
           this.previewImage = "";
+          this.placeAddress = "";
 
           // When done toast message about it
           this.toast.create({
@@ -93,6 +95,7 @@ export class AddPostPage {
     });
   }
 
+  /*
   findGeolocation() {
     this.geolocation.getCurrentPosition()
       .then(location => {
@@ -105,6 +108,43 @@ export class AddPostPage {
       }).catch(error => {
         console.error(error);
       });
+  }*/
+  findGeolocation() {
+
+    // Call on cordova@s geolocation plugin
+    this.geolocation.getCurrentPosition({
+      enableHighAccuracy: true
+    })
+
+      .then(location => {
+        // "Location" - get access to a object that holds a "coords"-object. That again holds our coordinates for
+        // latitude and longtitude 
+
+        this.location.latitude = location.coords.latitude;
+        this.location.longitude = location.coords.longitude;
+
+        // After collecting the latitude / longitude, we can now use that to pinpoint our geolocation with 
+        // PlacesProvider that use Google's Geocode
+        this.placesProvider.getPlaceBasedOnLatLng(location.coords.latitude, location.coords.longitude)
+          .then((place: any) => {
+            // if there is any error from our side or their side, return a error message
+            if(place.error_message) {
+              console.log(place.error_message)
+            } else {
+              // If the answer from Google Geocode is good, then we collect our address / placement
+              // "results" are a array with addresses, where we read and pick the address available at
+              // array-index 1 so we get the general Area, Street (bydel) instead of full address with postnumber and all which would be the 
+              // first item on the array with the location 0. As that would be too accurate for a application like this
+              // Using 2 for the city placement rather than the street for now. Like (Grunerlokka, Oslo, Norway)
+              this.placeAddress = place.results[2].formatted_address;
+            }
+          });
+
+      })
+      .catch(error => {
+        console.error(error)
+      });
+
   }
 
  

@@ -60,8 +60,13 @@
           </button>
         </ion-col>
         <ion-col center text-center>
-          <ion-note>
-            Område: Stovner
+          <ion-note *ngIf="post.placeAddress != null">
+            Område: {{post.placeAddress}}
+          </ion-note>
+          <!-- Har dette her bare for å vise mulighetene, kunne fjernet hele som price, men ville legge dette til
+          for å vise at det er mulig å vise noe annet, samt greit for bruker å vite om området er lagt til eller ikke. -->
+          <ion-note *ngIf="post.placeAddress == null">
+            Område: Ukjent
           </ion-note>
         </ion-col>
       </ion-row>
