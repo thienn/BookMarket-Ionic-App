@@ -44,9 +44,16 @@
     </ion-row>
     <ion-row>
       <p>
-        Hentet Område: {{placeAddress}}
+        Hentet Område: 
       </p>
     </ion-row>
-
+    <ion-row>
+      <div *ngIf="loading">
+        <ion-spinner></ion-spinner>
+      </div>
+      <div *ngIf="!loading">
+        {{placeAddress}}
+      </div>
+    </ion-row>
   </ion-grid>
 </ion-content>

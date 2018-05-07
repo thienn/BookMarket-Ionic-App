@@ -32,6 +32,9 @@ export class AddPostPage {
   public location: { latitude: number, longitude: number } = { latitude: 0, longitude: 0 }; //Basis for location before getting coordinates
   private placeAddress: string = "";
 
+  loading :boolean; // For showing spinner loading wheel when geolocation is working
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private camera: Camera, private afStorage: AngularFireStorage, private af: AngularFirestore,
   private geolocation: Geolocation, private placesProvider: PlacesProvider) {
     this.postCollection = navParams.get('postCollection');    
@@ -111,6 +114,8 @@ export class AddPostPage {
   }*/
   findGeolocation() {
 
+    this.loading = true; // Start loading spinner the moment the button is clicked
+
     // Call on cordova@s geolocation plugin
     this.geolocation.getCurrentPosition({
       enableHighAccuracy: true
@@ -136,6 +141,7 @@ export class AddPostPage {
               // array-index 1 so we get the general Area, Street (bydel) instead of full address with postnumber and all which would be the 
               // first item on the array with the location 0. As that would be too accurate for a application like this
               // Using 2 for the city placement rather than the street for now. Like (Grunerlokka, Oslo, Norway)
+              this.loading = false; // Disable the loading spinner the moment the information is ready to be presented
               this.placeAddress = place.results[2].formatted_address;
             }
           });
