@@ -13,14 +13,15 @@ import { AngularFirestore } from 'angularfire2/firestore';
 export class MyApp {
   // rootPage:any = HomePage;
   rootPage: any = HomePage;
-  // Import from child since MyApp doesn't have it's own NavController
+  // Import Nav from child since MyApp(root) can't inject it because components that are nav controllers are children of
+  // root component - https://ionicframework.com/docs/api/navigation/NavController/
   @ViewChild(Nav) nav: Nav;
 
   pages: Array<{title: string, component: any}>;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, af: AngularFirestore) {
 
-    /*
+    
     const authObserver = af.app.auth().onAuthStateChanged(
       (user) => {
 
@@ -31,7 +32,7 @@ export class MyApp {
         }
       }
     )
-    */
+    
     // List of pages that can be navigated to
     this.pages = [
       { title: 'Hjem / annonser', component: HomePage },
@@ -51,8 +52,8 @@ export class MyApp {
   }
 
   openPage(page){
-   // this.navCtrl.push(homePage)
-    this.nav.setRoot(page.component);
+   // this.nav.push(page.component) - Push Pop
+    this.nav.setRoot(page.component); // Root so it clears the history, can't click back etc
   }
 }
 
