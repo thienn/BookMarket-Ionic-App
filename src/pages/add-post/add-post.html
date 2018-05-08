@@ -21,7 +21,8 @@
     </ion-row>
     <ion-row>
       <ion-label fixed>Beskrivelse</ion-label>
-      <ion-input placeholder="Skriv om bøkene" [(ngModel)]="postBody"></ion-input>
+      <!-- TextArea 5 rows, with max 500 characters. Area so people know it's meant for longer description -->
+      <ion-textarea rows="5" maxLength="500" placeholder="Skriv om bøkene" [(ngModel)]="postBody"></ion-textarea>
     </ion-row>
     <ion-row>
         <ion-label fixed>Pris</ion-label>

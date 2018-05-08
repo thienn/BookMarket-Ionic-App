@@ -25,10 +25,11 @@ export class DetailPage {
   public commentText: string=""; // Input text for new comment
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // To show the comments 
+    // Connect to post
     this.post = navParams.get('post');
     this.postCollection = navParams.get('postCollection');
 
+    // To show the comments 
     this.comments = this.postCollection
       .doc(this.post.id)
       .collection("comments")

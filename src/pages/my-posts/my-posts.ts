@@ -56,8 +56,9 @@ export class MyPostsPage {
     })
   }
 
-  goToAddPostPage() {
-    this.navCtrl.push('AddPostPage', {
+  goToManagePostPage(post: Post) {
+    this.navCtrl.push('ManagePostPage', {
+      post,
       postCollection: this.collection
     })
   }

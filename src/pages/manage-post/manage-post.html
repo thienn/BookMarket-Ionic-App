@@ -7,12 +7,46 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>manage-post</ion-title>
+    <ion-title>Oppdater Post - {{post.title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  Test - Manage Post
+  <ion-grid>
+      <ion-row>
+          <ion-label fixed>Tittel</ion-label>
+          <ion-input placeholder="Tittel" [(ngModel)]="postTitle" value="{{post.title}}"></ion-input>
+        </ion-row>
+        <ion-row>
+          <ion-label fixed>Beskrivelse</ion-label>
+          <!-- 5 rows, then it starts to hide row by row the upper parts. Max characters 500 (may remove this)-->
+          <ion-textarea rows="5" maxLength="500" placeholder="Skriv om bøkene" [(ngModel)]="postBody" value={{post.body}}></ion-textarea>
+        </ion-row>
+        <ion-row>
+            <ion-label fixed>Pris</ion-label>
+            <ion-input type="number" placeholder="kr" [(ngModel)]="postPrice" value={{post.price}}></ion-input>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <button ion-button (click)="executeCamera()" [disabled]="!isenabled">Ta bilde</button>
+          </ion-col>
+          <ion-col>
+            <button ion-button (click)="findGeolocation()" [disabled]="!isenabled">Område</button>
+          </ion-col>
+          <ion-col>
+            <button ion-button (click)="updatePost()" color="secondary">Oppdater annonsen</button>
+          </ion-col>
+        </ion-row>
 
+        <!-- Gjør om til rødt med SASS og ta opp max width + Advarsel om at du sletter -->
+        <ion-row>
+          <ion-col>
+            <button ion-button (click)="deletePost()" color="danger">Slett annonsen</button>
+          </ion-col>
+        </ion-row>
+        
+  </ion-grid>
 </ion-content>
