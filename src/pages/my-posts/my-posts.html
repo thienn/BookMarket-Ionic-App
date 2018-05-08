@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>MyPosts</ion-title>
+    <ion-title>Dine annonser</ion-title>
     <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
@@ -17,7 +17,6 @@
 
 
 <ion-content padding>
-  Test
   <ion-list>
       <ion-item *ngFor="let post of posts | async">
         <ion-thumbnail item-start>
@@ -27,6 +26,7 @@
         <p> {{post.body}}</p>
         <p *ngIf="post.price != null"> {{post.price}} Kr</p>
         <button ion-button clear item-end (click)="goToDetailPage(post)">View</button>
+        <button ion-button clear item-end (click)="goToDetailPage(post)">Edit</button>
       </ion-item>
     </ion-list>
 </ion-content>

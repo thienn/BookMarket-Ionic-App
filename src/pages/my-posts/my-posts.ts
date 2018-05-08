@@ -49,5 +49,22 @@ export class MyPostsPage {
       });
   }
 
+  goToDetailPage(post: Post) {
+    this.navCtrl.push('DetailPage', {
+      post,
+      postCollection: this.collection
+    })
+  }
+
+  goToAddPostPage() {
+    this.navCtrl.push('AddPostPage', {
+      postCollection: this.collection
+    })
+  }
+
+  logout() {
+    this.afs.app.auth().signOut();
+  }
+
 
 }
