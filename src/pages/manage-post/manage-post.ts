@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Post } from '../../models/Post';
-import { AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 // import { Observable } from 'rxjs/Observable';
 
 /**
@@ -27,9 +27,9 @@ export class ManagePostPage {
   public postPrice: string = "";
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore) {
     this.post = navParams.get('post');
-    this.postCollection = navParams.get('postCollection');
+    this.postCollection = afs.collection<Post>("posts");
 
     console.log(this.post.title);
     console.log(this.post.id);

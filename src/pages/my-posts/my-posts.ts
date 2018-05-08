@@ -58,8 +58,11 @@ export class MyPostsPage {
 
   goToManagePostPage(post: Post) {
     this.navCtrl.push('ManagePostPage', {
+      post
+      /*
       post,
       postCollection: this.collection
+      */
     })
   }
 
