@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { Post } from '../../models/Post';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
@@ -27,7 +27,8 @@ export class ManagePostPage {
   public postPrice: string = "";
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore,
+  private toast: ToastController) {
     this.post = navParams.get('post');
     this.postCollection = afs.collection<Post>("posts");
 
@@ -49,9 +50,24 @@ export class ManagePostPage {
       title: this.postTitle,
       body: this.postBody,
       price: this.postPrice
-    } as Post).then(() => {
+    } as Post).then((response) => {
+      // pop up(toast) melding som sier ifra
+      this.toast.create({
+        message: "Annonsen er oppdatert",
+        duration: 2500 // varer i 2500 ms før den går vekk
+      }).present();
+      // navigerer tilbake til forrige liste i stacken (liste over annonser)
+      this.navCtrl.pop();
 
     })
+    .catch(error => {
+      this.toast.create({
+        message: error.message,
+        duration: 2500
+      }).present();
+      this.navCtrl.pop();
+    })
+
     /*
     this.postCollection.doc(this.post.id).update({
       title: this.postTitle, // Title to the post
@@ -84,6 +100,27 @@ export class ManagePostPage {
   }
 
   deletePost() {
+
+    console.log(this.post.id);
+
+    this.postCollection.doc(this.post.id).delete()
+      .then((repsonse) => {
+        this.toast.create({
+          message: "Annonsen er slettet", //Use title?
+          duration: 2500
+        }).present();
+        // pop up message then navigate back to previous page (list)
+        console.log("deleted post")
+        this.navCtrl.pop();
+      })
+      .catch(error => {
+        this.toast.create({
+          message: error.message,
+          duration: 2500
+        }).present();
+        this.navCtrl.pop();
+      })
+
 
   }
 
