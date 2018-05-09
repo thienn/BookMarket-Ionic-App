@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 
 import { Post } from '../../models/Post';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
@@ -28,7 +28,7 @@ export class ManagePostPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore,
-  private toast: ToastController) {
+  private toast: ToastController, private loadingCtrl: LoadingController) {
     this.post = navParams.get('post');
     this.postCollection = afs.collection<Post>("posts");
 
@@ -45,6 +45,8 @@ export class ManagePostPage {
   updatePost() {
 
     console.log(this.post.id);
+    let loading = this.loadingCtrl.create({ content: "Oppdaterer post..."});
+    loading.present();
 
     this.postCollection.doc(this.post.id).update({
       title: this.postTitle,
@@ -56,6 +58,8 @@ export class ManagePostPage {
         message: "Annonsen er oppdatert",
         duration: 2500 // varer i 2500 ms før den går vekk
       }).present();
+      // Gå ut av loading skjerm når det er ferdig.
+      loading.dismiss();
       // navigerer tilbake til forrige liste i stacken (liste over annonser)
       this.navCtrl.pop();
 
@@ -104,7 +108,7 @@ export class ManagePostPage {
     console.log(this.post.id);
 
     this.postCollection.doc(this.post.id).delete()
-      .then((repsonse) => {
+      .then((response) => {
         this.toast.create({
           message: "Annonsen er slettet", //Use title?
           duration: 2500
