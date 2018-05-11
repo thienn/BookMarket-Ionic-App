@@ -1,4 +1,5 @@
 page-home {
+    // Litt forandringer og med bruk av globale variabler fra theme/variables.scss
     .bg-style {
         background: map-get($colors, bookColor);
     }

@@ -38,9 +38,6 @@ export class MyApp {
       { title: 'Brukerprofil', component: UserProfilePage}
     ];
 
-
-
-
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -53,7 +50,7 @@ export class MyApp {
   // Setter page til root / sender til page basert på hva den får inn fra array
   openPage(page){
    // this.nav.push(page.component) - Push Pop
-    this.nav.setRoot(page.component); // Root so it clears the history, can't click back etc
+    this.nav.setRoot(page.component); // Setter root, så du ikke kan gå tilbake med tilbake-knappen. I forhold til push pop hvor du har history av hva som er i stacken
   }
 }
 

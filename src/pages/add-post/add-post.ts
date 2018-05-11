@@ -50,7 +50,6 @@ export class AddPostPage {
     let loading = this.loadingCtrl.create({ content: "Lagrer post..." });
     loading.present();
 
-    // Generate a filename for the picture we are going to upload, based on login email and seconds in UNIX phone time (1.1.1970)
     /*
        Genererer et filnavn for bildet vi skal laste opp til Firebase Storage, basert på innlogget email(brukernavn) med sekunder i UNIX telefonen's tid (1.1.1970)
     */
@@ -102,6 +101,8 @@ export class AddPostPage {
       correctOrientation: true
     })
       .then(imgBase64 => {
+        // Når det er lagt opp, setter vi previewImage til det samme som bildet, så det kan bli visuelt vist fram.
+        // HTML-en tar seg av å at previewImage bare er 300px og ikke hele bildet i størrelse.
         this.previewImage = imgBase64;
       });
   }
@@ -112,12 +113,12 @@ export class AddPostPage {
 
     // Kaller på native plugin for geolocation
     this.geolocation.getCurrentPosition({
-      enableHighAccuracy: false // true gjør at den i noen tilfeller er treig 
+      enableHighAccuracy: false // true gjør at den i noen tilfeller er treigt
     })
 
       .then(location => {
         /*
-          "location" - få tilbake objektet "coords"-objektet. Denne innholder alle data vi får fra metoden, deretter henter vi ut latitude og longitude derfra og kobler opp til vår variabler
+          "location" - få tilbake objektet "coords"-objektet. Denne innholder alle data vi får fra metoden, deretter henter vi ut spesifikt latitude og longitude derfra og kobler opp til vår variabler
         */
 
         this.location.latitude = location.coords.latitude;
@@ -126,7 +127,7 @@ export class AddPostPage {
         // Etter at vi har fått inn latitude & longitude, kan vi bruke dette til å finne ut område ved hjelp av placesProvider som kobler seg til Google's Geocoding
         this.placesProvider.getPlaceBasedOnLatLng(location.coords.latitude, location.coords.longitude)
           .then((place: any) => {
-            // Hvis det er noe feil fra vår elelr deres side så send tilbake melding på consolen
+            // Hvis det er noe feil fra vår eller deres side så send tilbake melding på console
             if (place.error_message) {
               console.log(place.error_message)
             } else {

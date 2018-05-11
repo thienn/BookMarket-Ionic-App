@@ -28,7 +28,7 @@
               <ion-item>
                 <h2>{{post.title}}</h2>
                 <p>{{post.body}}</p>
-                <!-- Only show if there any value / not null. -->
+                <!-- Bare vis, hvis det er en value der og ikke null, (refaktorer senere for å håndtere annet som empty strings osv)-->
                 <p *ngIf="post.price != null">Pris: {{post.price}} kr</p>
               </ion-item>
               <ion-item>

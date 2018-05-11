@@ -29,7 +29,7 @@ export class DetailPage {
     this.post = navParams.get('post');
     this.postCollection = navParams.get('postCollection');
 
-    // Til å vise fram kommenterarer fra subcollection "comments" basert på post ID som vi fikk sendt fra forrige side. Og sier ifra at det er "comments" vi ser på
+    // Til å vise fram kommenterarer fra subcollection "comments" basert på post ID som vi fikk sendt fra forrige side. Og sier ifra at det er "comments" vi vil se på
     this.comments = this.postCollection
       .doc(this.post.id)
       .collection("comments")
