@@ -1,3 +1,9 @@
 page-detail {
-    .card { border-radius : 5px; } 
+    .card { 
+        border-radius : 5px; 
+    } 
+
+    .bg-style {
+        background: map-get($colors, bookColor);
+    }
 }

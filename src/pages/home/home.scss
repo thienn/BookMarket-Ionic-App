@@ -1,3 +1,15 @@
 page-home {
+    .bg-style {
+        background: map-get($colors, bookColor);
+    }
 
+    .item-style {
+        background: map-get($colors, itemColor);
+        border: 2px solid map-get($colors, bookColor);
+        border-radius: 10px;
+    }
+
+    .thumbnail-style {
+        border: 1px solid black;
+    }
 }

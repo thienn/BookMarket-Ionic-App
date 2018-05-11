@@ -6,14 +6,14 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="itemColor">
     <ion-title>{{post.title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="bg-style" padding>
   <!--
     {{post.title}}
 
@@ -55,7 +55,7 @@
           </button>
         </ion-col>
         <ion-col>
-          <button ion-button icon-left clear small>
+          <button ion-button icon-left clear small [disabled]="!isenabled">
             <ion-icon name="chatbubbles"></ion-icon>
             <div>Melding</div>
           </button>

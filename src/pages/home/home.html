@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="itemColor">
     <ion-title>
       Marked
     </ion-title>
@@ -17,16 +17,17 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="bg-style" padding>
   <ion-list>
-    <ion-item *ngFor="let post of posts | async">
-      <ion-thumbnail item-start>
+    <ion-item class="item-style" *ngFor="let post of posts | async">
+      <ion-thumbnail class="thumbnail-style" item-start>
           <img src="{{post.imgUrl}}">
       </ion-thumbnail>
       <h2>{{post.title}}</h2>
       <p> {{post.body}}</p>
-      <p *ngIf="post.price != null"> {{post.price}} Kr</p>
-      <button ion-button clear item-end (click)="goToDetailPage(post)">View</button>
+      <p *ngIf="post.price != null"> {{post.price}} Kr</p> 
+     <!-- <p *ngIf="post.price >= 0"> {{post.price}} Kr</p> -->
+      <button ion-button clear item-end (click)="goToDetailPage(post)">Les annonse</button>
     </ion-item>
   </ion-list>
 </ion-content>

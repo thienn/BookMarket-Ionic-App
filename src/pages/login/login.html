@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Login Page</ion-title>
+    <ion-title>Logg inn</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,16 +17,16 @@
   <ion-grid>
     <ion-col>
       <ion-row>
-        <ion-label fixed>Username</ion-label>
+        <ion-label fixed>Brukernavn</ion-label>
         <ion-input type="text" [(ngModel)]="user.username"></ion-input>
       </ion-row>
       <ion-row>
-        <ion-label fixed>Password</ion-label>
+        <ion-label fixed>Passord</ion-label>
         <ion-input type="password" [(ngModel)]="user.password"></ion-input>
       </ion-row>
       <ion-row>
         <button block ion-button (click)="loginUser()">Logg inn</button>
-        <button block ion-button (click)="registerUser()">Registrer</button>
+        <button block ion-button block outline (click)="registerUser()">Registrering</button>
       </ion-row>
     </ion-col>
   </ion-grid>
