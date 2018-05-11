@@ -17,6 +17,7 @@
   </ion-navbar>
 </ion-header>
 
+  <!-- Simpel Thumbnail stil liste, med litt stilføring i SCSS filen-->
 <ion-content class="bg-style" padding>
   <ion-list>
     <ion-item class="item-style" *ngFor="let post of posts | async">
@@ -31,12 +32,3 @@
     </ion-item>
   </ion-list>
 </ion-content>
-
-<!--
-<ion-content>
-    <ion-list class="image-view" no-lines>
-      <img [src]="post.imgUrl" *ngFor="let post of posts | async" (click)="goToDetailPage(post)" />
-    </ion-list>
-</ion-content>
-
--->

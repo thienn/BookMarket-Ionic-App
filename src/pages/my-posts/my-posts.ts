@@ -27,15 +27,15 @@ export class MyPostsPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private afs: AngularFirestore) {
-   // this.CurrentAuthor = this.afs.app.auth().currentUser.email;
+   // For testing for å se om det er riktig bruker
    console.log(this.CurrentAuthor);
 
-    // this.collection = afs.collection<Post>("posts"); // Specifies the collection called posts in the DB
+    // Setter opp collection og spesifiserer posts som den vi vil se på, deretter henter den via Query alt som er koblet til innlogget bruker som author
     this.collection = afs.collection<Post>('posts', (ref) => {
-      return ref.where('author', '==', this.CurrentAuthor)// SELECT * FROM posts WHERE author = Current logged in account
+      return ref.where('author', '==', this.CurrentAuthor)// SELECT * FROM posts WHERE author = innlogget bruker
     });
 
-    this.posts = this.collection.snapshotChanges() // for realtime looking for changes in that collection
+    this.posts = this.collection.snapshotChanges() // Forklart i de andre, henter ut data og meta data for poster samt se etter forandringer i denne collection
       .map(actions => {
         return actions.map(action => {
           let data = action.payload.doc.data() as Post;
@@ -43,7 +43,7 @@ export class MyPostsPage {
 
           return {
             id,
-            ...data  // Spread operator, packs out the data in the object & returns it with metadata (ID) and the data (fields) in the post
+            ...data  // Spread opderator, pakker ut objektet med metadata (ID) og data (fields)
           };
         })
       });
@@ -56,13 +56,10 @@ export class MyPostsPage {
     })
   }
 
+  // Sender over bare post informasjon, trenger ikke å sende hele collection som i goToDetailPage() ettersom i ManagePostPage setter vi opp collection på nytt.
   goToManagePostPage(post: Post) {
     this.navCtrl.push('ManagePostPage', {
       post
-      /*
-      post,
-      postCollection: this.collection
-      */
     })
   }
 

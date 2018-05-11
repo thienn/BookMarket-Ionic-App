@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 
 import { Camera } from '@ionic-native/camera';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { AngularFireStorage } from 'angularfire2/storage';
 import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
 
 import { Post } from '../../models/Post';
-import { PlacesProvider } from '../../providers/places/places';
-import { Geolocation } from '@ionic-native/geolocation';
+import { PlacesProvider } from '../../providers/places/places';
+
 
 /**
  * Generated class for the AddPostPage page.
@@ -24,125 +25,119 @@ import { Geolocation } from '@ionic-native/geolocation';
 })
 export class AddPostPage {
   public postCollection: AngularFirestoreCollection<Post>;
-  public postTitle: string =""; //Empty placeholder that will be the string that get sent to Firebase as title of post
-  public postBody: string =""; //Empty placeholder that will be the string that get sent to Firebase as content of post (body)
-  public postPrice: string ="";
-  private previewImage: string = ""; 
-  
-  public location: { latitude: number, longitude: number } = { latitude: 0, longitude: 0 }; //Basis for location before getting coordinates
+
+  // Tomme placeholder objekt som vil få inn data for å sende til Firebase
+  public postTitle: string = "";
+  public postBody: string = "";
+  public postPrice: string = "";
+  private previewImage: string = "";
+
+  public location: { latitude: number, longitude: number } = { latitude: 0, longitude: 0 }; //Basis objekt for location før de får inn de ekte koordinatene
   private placeAddress: string = "";
 
-  loading :boolean; // For showing spinner loading wheel when geolocation is working
+  loading: boolean; // Loading boolean for å vise fram når den blir kalt på i koden.
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private camera: Camera, private afStorage: AngularFireStorage, private af: AngularFirestore,
-  private geolocation: Geolocation, private placesProvider: PlacesProvider) {
-    this.postCollection = navParams.get('postCollection');    
+    private geolocation: Geolocation, private placesProvider: PlacesProvider, private loadingCtrl: LoadingController) {
+    // Siden vi sender med collection fra Home allerede, trenger vi ikke å sette opp alt igjen, trenger bare å si ifra at det er den for å ta i bruk og koble de sammen.
+    this.postCollection = navParams.get('postCollection');
   }
 
   addPost() {
 
+    // Setter opp en loading pop up mens alt blir jobbet i bakgrunnen, så bruker vet hva som skjer.
+    let loading = this.loadingCtrl.create({ content: "Lagrer post..." });
+    loading.present();
+
     // Generate a filename for the picture we are going to upload, based on login email and seconds in UNIX phone time (1.1.1970)
-    //  let imageFileName = '${this.af.app.auth().currentUser.email}_${new Date().getTime()}.png';
     /*
-    let imageFileName = `${this.af.app.auth().currentUser.email}_${new Date().getTime()}.png`;
+       Genererer et filnavn for bildet vi skal laste opp til Firebase Storage, basert på innlogget email(brukernavn) med sekunder i UNIX telefonen's tid (1.1.1970)
     */
-   let imageFileName = `${this.af.firestore.app.auth().currentUser.email}_${new Date().getTime()}.png`;
+    let imageFileName = `${this.af.firestore.app.auth().currentUser.email}_${new Date().getTime()}.png`;
 
-    // Then make a task that takes care of the uploading
+    // Lager en oppgave om å laste de topp til firebase storage. 
     let task = this.afStorage
-     .ref(imageFileName) // Specify filename for the picture we want to be is the generated one above
-     .putString(this.previewImage, 'base64', { contentType: 'image/png'}); // Upload picture vi just took with Base64-format
+      .ref(imageFileName) // Spesifiserer til filnavnet vi laget før dette som navn
+      .putString(this.previewImage, 'base64', { contentType: 'image/png' }); // Laster opp bilde vi tok med knappen med base64 format - hvis det ikke er noe bilde tatt, så laster den opp noe tomt(finne ut av dette senere) med filnavnet
 
-    // Then make an event which the app can use to listen to when the picture is done uploading
+    // Lager en event som skal vente på at downloadURL fra firestore Storage er klar, dermed gå videre
     let uploadEvent = task.downloadURL();
-    
-      // Here the app listen to when the picture is done uploading. When it is, get access to the picture's
-      // URL on the server Firebase
-      uploadEvent.subscribe((uploadImageUrl) => {
-        console.log(uploadImageUrl) // Currently app sometimes connect the URL to the post and sometimes not. Either due to reset or API key havent gotten down to it 100% yet Going to test both more
-        this.postCollection.add({
-          title: this.postTitle, // Title to the post
-          body: this.postBody, // Specify the description / body of the content
-          price: this.postPrice,
-          placeAddress: this.placeAddress,
-          author: this.af.app.auth().currentUser.email, // specify that the author is the email of the user
-          imgUrl: uploadImageUrl, // here program send the URL to picture we just uploaded with the post. So we can show it up the "feed"
-        } as Post).then(() => {
 
-          // Reset all the fields in case the user want to post new one after
-          this.postTitle = "";
-          this.postBody = "";
-          this.postPrice = "";
-          this.previewImage = "";
-          this.placeAddress = "";
+    // Her venter den inntil opplastningen er ferdig gjennom subscribe, deretter går den gjennom prosessen vi har lagt til som er å legge til et post
+    uploadEvent.subscribe((uploadImageUrl) => {
+      console.log(uploadImageUrl) // Logger link ut på console for testing - debug
+      this.postCollection.add({
+        title: this.postTitle, // Titel på posten 
+        body: this.postBody, // Teksten som skal være med i posten
+        price: this.postPrice, // Pris hvis det blir lagt til - null om det ikke er noe
+        placeAddress: this.placeAddress, // Område basert på findGeolocation - Satt til bydel akkurat nå
+        author: this.af.app.auth().currentUser.email, // Spesifiserer at det er innlogget bruker's email som skal være author
+        imgUrl: uploadImageUrl, // Spesifiserer at downloadURL vi fikk tidiligere er den som skal kobles til i field "imgUrl" i posten. Så den automatisk viser fram.
+      } as Post).then(() => {
 
-          // When done toast message about it
-          this.toast.create({
-            message: "Done posting",
-            duration: 2500
-          }).present();
-        })
-      });
+        loading.dismiss();
+        // Resetter alle input-fields, så bruker kan laste opp noe annet etter det er ferdig.
+        this.postTitle = "";
+        this.postBody = "";
+        this.postPrice = "";
+        this.previewImage = "";
+        this.placeAddress = "";
+
+        // Lager en toast melding som sier ifra at det er ferdig - Ikke nødvendig men ekstra bare for å gjøre det mer brukervennlig
+        this.toast.create({
+          message: "Annonsen er postet!",
+          duration: 2500
+        }).present();
+      })
+    });
   }
 
   executeCamera() {
+    // Standard spesifikasjoner for å starte opp kamera samt type det skal være.
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       cameraDirection: this.camera.Direction.BACK,
       correctOrientation: true
     })
-    .then(imgBase64 => {
-     this.previewImage = imgBase64;
-    });
+      .then(imgBase64 => {
+        this.previewImage = imgBase64;
+      });
   }
 
-  /*
-  findGeolocation() {
-    this.geolocation.getCurrentPosition()
-      .then(location => {
-        this.placesProvider.getPlaceBasedOnLatLng(
-          location.coords.latitude,
-          location.coords.longitude
-        ).then((place: any) => {
-          this.placeAddress = place.results[1].formatted_address;
-        });
-      }).catch(error => {
-        console.error(error);
-      });
-  }*/
   findGeolocation() {
 
-    this.loading = true; // Start loading spinner the moment the button is clicked
+    this.loading = true; // Siden denne prosessen noen ganger kan ta fra 2-3 sekunder til mye lengre tid, så trenger vi en loading spinner som kjører mens det blir gjort i bakgrunnen.
 
-    // Call on cordova@s geolocation plugin
+    // Kaller på native plugin for geolocation
     this.geolocation.getCurrentPosition({
-      enableHighAccuracy: true
+      enableHighAccuracy: false // true gjør at den i noen tilfeller er treig 
     })
 
       .then(location => {
-        // "Location" - get access to a object that holds a "coords"-object. That again holds our coordinates for
-        // latitude and longtitude 
+        /*
+          "location" - få tilbake objektet "coords"-objektet. Denne innholder alle data vi får fra metoden, deretter henter vi ut latitude og longitude derfra og kobler opp til vår variabler
+        */
 
         this.location.latitude = location.coords.latitude;
         this.location.longitude = location.coords.longitude;
 
-        // After collecting the latitude / longitude, we can now use that to pinpoint our geolocation with 
-        // PlacesProvider that use Google's Geocode
+        // Etter at vi har fått inn latitude & longitude, kan vi bruke dette til å finne ut område ved hjelp av placesProvider som kobler seg til Google's Geocoding
         this.placesProvider.getPlaceBasedOnLatLng(location.coords.latitude, location.coords.longitude)
           .then((place: any) => {
-            // if there is any error from our side or their side, return a error message
-            if(place.error_message) {
+            // Hvis det er noe feil fra vår elelr deres side så send tilbake melding på consolen
+            if (place.error_message) {
               console.log(place.error_message)
             } else {
-              // If the answer from Google Geocode is good, then we collect our address / placement
-              // "results" are a array with addresses, where we read and pick the address available at
-              // array-index 1 so we get the general Area, Street (bydel) instead of full address with postnumber and all which would be the 
-              // first item on the array with the location 0. As that would be too accurate for a application like this
-              // Using 2 for the city placement rather than the street for now. Like (Grunerlokka, Oslo, Norway)
-              this.loading = false; // Disable the loading spinner the moment the information is ready to be presented
-              this.placeAddress = place.results[2].formatted_address;
+
+              /* Når vi får tilbake objektet fra Google's geocode, gjennom en "formatted_address"-objekt. Med array av detaljer vi kan ta i bruk. 
+                Array index 0 er f.eks full addresse, 1 er gate, deretter 2 er bydel og postnummer ov videre. Mindre og mindre nøyaktighet jo lengre ned i det du går.
+                Teori fra - https://developers.google.com/maps/documentation/geocoding/intro#reverse-example Med forklaring av formatted_address
+                I vår eksempel har vi lyst å bruke bydel som default, Grunerløkka, Oslo, Norway / Stovner, Oslo, Norway osv. Så det ikke blir "For nøyaktig for offentlig informasjon"
+              */
+              this.loading = false; // Hvis vi ikke får en feilmelding og data fra objektet er klar til å presenteres slår vi av loading spinner
+              this.placeAddress = place.results[2].formatted_address; // Forklart i paragraf over
             }
           });
 
@@ -150,9 +145,5 @@ export class AddPostPage {
       .catch(error => {
         console.error(error)
       });
-
   }
-
- 
-
 }

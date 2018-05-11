@@ -16,9 +16,9 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private af: AngularFirestore) {
 
-    this.collection = af.collection<Post>("posts"); // Specifies the collection called posts in the DB
+    this.collection = af.collection<Post>("posts"); // spesifiserer hvilken collection vi skal koble opp til. Posts i dette tilfellet
 
-    this.posts = this.collection.snapshotChanges() // for realtime looking for changes in that collection
+    this.posts = this.collection.snapshotChanges() // Setter opp en funksjonalitet som henter ut data fra post med metadata som ID. Med real time observering gjennom Observable for å se etter forandringer og hente inn ny data når det blir lagt til i Firebase
       .map(actions => {
         return actions.map(action => {
           let data = action.payload.doc.data() as Post;
@@ -26,13 +26,14 @@ export class HomePage {
 
           return {
             id,
-            ...data  // Spread operator, packs out the data in the object & returns it with metadata (ID) and the data (fields) in the post
+            ...data // Spread operator, pakker ut data fra objektet, og returnerer med Metadata (ID) og data fra (fields) i posten.
           };
         })
       });
 
   }
 
+  // Sender over posten vi vil se på, samt collection så vi slipper å sette opp det på nytt når vi ankommer DetailPage eller AddPostPage. Spesielt i Detail, med tanke på der skal vi sette opp en annen for subcollection
   goToDetailPage(post: Post) {
     this.navCtrl.push('DetailPage', {
       post,

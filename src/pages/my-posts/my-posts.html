@@ -11,66 +11,38 @@
     <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-
       <ion-buttons end>
           <button ion-button (click)="logout()">
             <ion-icon name="exit"></ion-icon>
           </button>
         </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
+<!-- Simpel kortvisning, dette fordi det er sannsynligvis mye færre items på listen, samt greit å se mer data når du skal se over dine egne annonser som du vil enten se eller endre detaljer på -->
 <ion-content padding>
-     <!--
-  <ion-list>
- 
-      <ion-item *ngFor="let post of posts | async">
-        <ion-thumbnail item-start>
-            <img src="{{post.imgUrl}}">
-        </ion-thumbnail>
-        <h2>{{post.title}}</h2>
-        <p> {{post.body}}</p>
-        <p *ngIf="post.price != null"> {{post.price}} Kr</p>
-         <button ion-button clear item-end (click)="goToDetailPage(post)">View</button> 
-        <button ion-button clear item-end (click)="goToManagePostPage(post)">Manage</button>
-      </ion-item>
-    </ion-list>
-    -->
     <ion-list>
           <ion-card *ngFor="let post of posts | async">
               <img style="height: auto; width: auto;" src="{{post.imgUrl}}">
-
+              
               <ion-item>
-                <!--   <ion-icon name="football" item-start large></ion-icon> -->
-                  <h2>{{post.title}}</h2>
-                  <p>{{post.body}}</p>
-                  <p *ngIf="post.price != null">Pris: {{post.price}} kr</p> <!-- Only show if there any value / not null. -->
-                </ion-item>
-                <ion-item>
-                    <span item-left>
-                        <button ion-button icon-left clear item-end (click)="goToDetailPage(post)">
-                            <ion-icon name="book"></ion-icon>
-                            Se annonse
-                          </button>
-                        </span>
-
-                    <button ion-button icon-left clear item-end (click)="goToManagePostPage(post)">
-                      <ion-icon name="build"></ion-icon>
-                      Endre
-                    </button>
-                  </ion-item>
+                <h2>{{post.title}}</h2>
+                <p>{{post.body}}</p>
+                <!-- Only show if there any value / not null. -->
+                <p *ngIf="post.price != null">Pris: {{post.price}} kr</p>
+              </ion-item>
+              <ion-item>
+                <span item-left>
+                  <button ion-button icon-left clear item-end (click)="goToDetailPage(post)">
+                    <ion-icon name="book"></ion-icon>
+                    Se annonse
+                  </button>
+                </span>
+                <button ion-button icon-left clear item-end (click)="goToManagePostPage(post)">
+                  <ion-icon name="build"></ion-icon>
+                  Endre
+                </button>
+              </ion-item>
           </ion-card>
-          <!--
-          <ion-thumbnail item-start>
-              <img src="{{post.imgUrl}}">
-          </ion-thumbnail>
-          <h2>{{post.title}}</h2>
-          <p> {{post.body}}</p>
-          <p *ngIf="post.price != null"> {{post.price}} Kr</p>
-           <button ion-button clear item-end (click)="goToDetailPage(post)">View</button> 
-          <button ion-button clear item-end (click)="goToManagePostPage(post)">Manage</button>
-        </ion-item> -->
       </ion-list>
 </ion-content>

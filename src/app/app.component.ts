@@ -12,17 +12,14 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  // rootPage:any = HomePage;
   rootPage: any = HomePage;
-  // Import Nav from child since MyApp(root) can't inject it because components that are nav controllers are children of
-  // root component - https://ionicframework.com/docs/api/navigation/NavController/
+  // Importerer Nav fra 'child' siden MyApp(root) kan ikke injectecte det som de andre, grunnet komponenter relatert til NavController er children av root komponentet.
+  // Kilde om root og ViewChild - https://ionicframework.com/docs/api/navigation/NavController/#navigating-from-the-root-component
   @ViewChild(Nav) nav: Nav;
 
   pages: Array<{title: string, component: any}>;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, af: AngularFirestore) {
-
-    
     const authObserver = af.app.auth().onAuthStateChanged(
       (user) => {
 
@@ -34,7 +31,7 @@ export class MyApp {
       }
     )
     
-    // List of pages that can be navigated to
+    // Array-liste som genererer side menyen, med link til siden. + (Lukk meny på slutten i app.HTML som er utenfor array, så den alltid er på slutten og konstant)
     this.pages = [
       { title: 'Hjem / annonser', component: HomePage },
       { title: 'Mine annonser', component: MyPostsPage},
@@ -53,6 +50,7 @@ export class MyApp {
 
   }
 
+  // Setter page til root / sender til page basert på hva den får inn fra array
   openPage(page){
    // this.nav.push(page.component) - Push Pop
     this.nav.setRoot(page.component); // Root so it clears the history, can't click back etc

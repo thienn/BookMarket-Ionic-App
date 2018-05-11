@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
   and Angular DI.
 
   Kode lånt fra Andreas Biørn-Hansen - https://github.com/andreasbhansen/TDS200_v18/blob/master/lecture_7/oving_lecture_7/src/providers/places/places.ts
+  og teori fra https://developers.google.com/maps/documentation/geolocation/intro
 */
 @Injectable()
 export class PlacesProvider {

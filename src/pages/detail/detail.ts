@@ -25,18 +25,18 @@ export class DetailPage {
   public commentText: string=""; // Input text for new comment
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // Connect to post
+    // Kobler opp til post vi fikk fra HomePage, og til postCollection vi fikk derfra.
     this.post = navParams.get('post');
     this.postCollection = navParams.get('postCollection');
 
-    // To show the comments 
+    // Til å vise fram kommenterarer fra subcollection "comments" basert på post ID som vi fikk sendt fra forrige side. Og sier ifra at det er "comments" vi ser på
     this.comments = this.postCollection
       .doc(this.post.id)
       .collection("comments")
       .valueChanges();
   }
 
-  // Add comment with the text from commentText which is connected to the input field in detail.HTML
+  // Legg til kommentar med text fra commentText, spesifiserer at det skal legges til subcollection "comments" under spesifikk post basert på Post.ID
   addComment() {
     this.postCollection
       .doc(this.post.id)
@@ -45,7 +45,7 @@ export class DetailPage {
         comment: this.commentText
       })
       .then(() => {
-        // Reset the comment field if the post go through successfully
+        // Resetter kommentarfelt når det er postet
         this.commentText = "";
       })
   }  

@@ -5,11 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>Legg ut annonse</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -21,10 +19,11 @@
     </ion-row>
     <ion-row>
       <ion-label fixed>Beskrivelse</ion-label>
-      <!-- TextArea 5 rows, with max 500 characters. Area so people know it's meant for longer description -->
+      <!-- TextArea 5 rader, med maks 500 bokstaver. Bruker Area så brukeren vet at et er meant for lenger tekster / beskrivelse hvis de vil -->
       <ion-textarea rows="5" maxLength="500" placeholder="Skriv om bøkene" [(ngModel)]="postBody"></ion-textarea>
     </ion-row>
     <ion-row>
+        <!-- type som number så tastaturet kommer opp med nummerpanelet, men det registreres som string i tilfelle du vil legge til som "kan diskuteres eller noe lignende" -->
         <ion-label fixed>Pris</ion-label>
         <ion-input type="number" placeholder="kr" [(ngModel)]="postPrice"></ion-input>
     </ion-row>
@@ -48,6 +47,7 @@
         Hentet Område: 
       </p>
     </ion-row>
+    <!-- Kaller på loading spinner så lenge loading er satt i koden, når den blir dismissed så viser den fram data (fra koden skjer dette bare etter den har fått inn noe data) -->
     <ion-row>
       <div *ngIf="loading">
         <ion-spinner></ion-spinner>

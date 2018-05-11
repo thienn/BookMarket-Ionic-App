@@ -22,13 +22,14 @@
         </ion-row>
         <ion-row>
           <ion-label fixed>Beskrivelse</ion-label>
-          <!-- 5 rows, then it starts to hide row by row the upper parts. Max characters 500 (may remove this)-->
+          <!-- 5 rader, deretter starter den å gjemme øverste tekst og videre, så det er 5 rader vist om gangen. Maks 500 ord -->
           <ion-textarea rows="5" maxLength="500" placeholder="Skriv om bøkene" [(ngModel)]="postBody" value={{post.body}}></ion-textarea>
         </ion-row>
         <ion-row>
             <ion-label fixed>Pris</ion-label>
             <ion-input type="number" placeholder="kr" [(ngModel)]="postPrice" value={{post.price}}></ion-input>
         </ion-row>
+        <!-- Knappene for kamera og lokasjon er deaktivert inntil funksjonalitene er implementert -->
         <ion-row>
           <ion-col>
             <button ion-button (click)="executeCamera()" [disabled]="!isenabled">Ta bilde</button>

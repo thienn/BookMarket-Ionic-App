@@ -5,36 +5,13 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="itemColor">
     <ion-title>{{post.title}}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content class="bg-style" padding>
-  <!--
-    {{post.title}}
-
-    <img [src]="post.imgUrl" /> 
-
-    {{post.body}}
-
-    <p>Kontakt Info: Navn: {{post.author}} <ion-icon name="call"></ion-icon> Ring  <ion-icon name="chatbubbles"></ion-icon> PM </p> 
-  
-  <ion-list>
-    <ion-item *ngFor="let comment of comments | async">
-     {{comment.comment}} 
-    </ion-item>
-  </ion-list>  
-
-  <ion-input placeholder="Skriv kommentar.." [(ngModel)]="commentText"></ion-input> 
-  <button ion-button (click)="addComment()">Post comment</button>
-  -->
-
   <ion-card>
-
       <ion-item>
         <h2>{{post.title}}</h2>
         <p>Av: {{post.author}}</p>
@@ -44,7 +21,7 @@
     
       <ion-card-content>
         <p>{{post.body}}</p>
-        <p *ngIf="post.price != null">Pris: {{post.price}} kr</p> <!-- Only show if there any value / not null. -->
+        <p *ngIf="post.price != null">Pris: {{post.price}} kr</p> <!-- Bare vis hvis det har variablen har innhold, og ikke når det er null. (Legge til støtte for når det er 0, tomt og lignende. Sjekker bare null akkurat nå) -->
       </ion-card-content>
     
       <ion-row>
@@ -61,6 +38,7 @@
           </button>
         </ion-col>
         <ion-col center text-center>
+          <!-- Viser data om det finnes, hvis det er null og ingenting der så bruker den Område: Ukjent -->
           <ion-note *ngIf="post.placeAddress != null">
             Område: {{post.placeAddress}}
           </ion-note>
@@ -71,9 +49,9 @@
           </ion-note>
         </ion-col>
       </ion-row>
-    
     </ion-card>
 
+    <!-- Kommentarfet for å vise subcollections - TODO: Konverter dette til noe mer brukbart, kanskje notification for poster og lignende -->
     <ion-card>
         <ion-list>
             <ion-item>

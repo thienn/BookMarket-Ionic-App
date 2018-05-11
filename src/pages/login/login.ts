@@ -16,6 +16,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 })
 export class LoginPage {
 
+  // Simpel objekt som skal brukes for å registrere / logge inn bruker
   public user = {
     username: "",
     password: ""
@@ -25,11 +26,12 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private af: AngularFirestore, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private toast: ToastController) {
   }
   
-  // Login
+  // Login - Starter opp loading med engang du trykker knappen, deretter kjøres det meste i bakgrunnen. Visuelt for å vise fram til bruker.
+  // Logger inn og registrering ved hjelp av funksjoner i angularfire2 
   loginUser() {
     let loading = this.loadingCtrl.create({ content: "Logger inn..."});
     loading.present();
-
+  
   this.af.app.auth()
     .signInWithEmailAndPassword(this.user.username, this.user.password)
     .then(response => {
@@ -54,7 +56,7 @@ export class LoginPage {
   })
 }
 
-  // Register
+  // Register - Veldig lik oppsett som login bare med annen metode fra angularfire2 for registrering istedet
   registerUser() {
     let loading = this.loadingCtrl.create({ content: "Registrerer..."});
     loading.present();
@@ -64,6 +66,11 @@ export class LoginPage {
       .then(response => {
         console.log(response);
         loading.dismiss();
+          // Toast melding som sier velkommen og deretter med brukernavn
+          this.toast.create({
+            message: "Velkommen! Du er nå logget inn som " + this.user.username,
+            duration: 2500 // varer i 2500 ms før den går vekk
+          }).present();
       })
       .catch(error => {
         console.error(error);
