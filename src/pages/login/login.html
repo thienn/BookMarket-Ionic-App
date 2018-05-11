@@ -18,11 +18,11 @@
     <ion-col>
       <ion-row>
         <ion-label fixed>Brukernavn</ion-label>
-        <ion-input type="text" [(ngModel)]="user.username"></ion-input>
+        <ion-input class="text-input-field" type="text" [(ngModel)]="user.username"></ion-input>
       </ion-row>
       <ion-row>
         <ion-label fixed>Passord</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+        <ion-input class="text-input-field" type="password" [(ngModel)]="user.password"></ion-input>
       </ion-row>
       <ion-row>
         <button block ion-button (click)="loginUser()">Logg inn</button>
