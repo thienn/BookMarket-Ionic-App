@@ -28,14 +28,14 @@ export class LoginPage {
   
   // Login
   loginUser() {
-    this.af.app.auth()
-      .signInWithEmailAndPassword(this.user.username, this.user.password)
-      .then(response => {
-       console.log(response);
-      })
-      .catch(error => {
-      console.error(error);
+  this.af.app.auth()
+    .signInWithEmailAndPassword(this.user.username, this.user.password)
+    .then(response => {
+      console.log(response);
     })
+    .catch(error => {
+    console.error(error);
+  })
 }
 
   // Register

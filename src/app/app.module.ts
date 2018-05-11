@@ -7,6 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MyPostsPage } from '../pages/my-posts/my-posts';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
+
 import { AuthorizeProvider } from '../providers/authorize/authorize';
 
 import { AngularFireModule } from 'angularfire2';
@@ -26,7 +28,8 @@ import env from '../env';
   declarations: [
     MyApp,
     HomePage,
-    MyPostsPage
+    MyPostsPage,
+    UserProfilePage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import env from '../env';
   entryComponents: [
     MyApp,
     HomePage,
-    MyPostsPage
+    MyPostsPage,
+    UserProfilePage
   ],
   providers: [
     StatusBar,

@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+
+import { User } from '../../models/User';
+
+import { Observable } from 'rxjs/Observable';
 
 /*
   Generated class for the AuthorizeProvider provider.
@@ -11,41 +15,50 @@ import { AngularFirestore } from 'angularfire2/firestore';
 */
 @Injectable()
 export class AuthorizeProvider {
+  public collection: AngularFirestoreCollection<User>;
+  public users: Observable<User[]>;
+
+    // Define variables to use, empty until connected to post 
+    public userID: string = ""; //Empty placeholder that will be the string that get sent to Firebase as title of post
+    public userName: string = ""; //Empty placeholder that will be the string that get sent to Firebase as content of post (body)
+    public userNumber: number = 0;
 
   public user = {
     username: "",
     password: ""
   }
 
-  constructor(public http: HttpClient, private af: AngularFirestore) {
-    console.log('Hello AuthorizeProvider Provider');
-  }
-
-  // Similar setup on both, just using different call. Try / catch method for success & error if something goes wrong. Rest is handled by the Firestore module
   /*
-  // Login
-  loginUser() {
-    this.af.app.auth()
-      .signInWithEmailAndPassword(this.user.username, this.user.password)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.error(error);
-      })
-  }
+  constructor(public http: HttpClient, private af: AngularFirestore) {
+    this.collection = af.collection<User>("users"); // Specifies the collection called posts in the DB
 
-  // Register
-  registerUser() {
-    this.af.app.auth()
-      .createUserWithEmailAndPassword(this.user.username, this.user.password)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.error(error);
-      })
+    this.users = this.collection.snapshotChanges() // for realtime looking for changes in that collection
+      .map(actions => {
+        return actions.map(action => {
+          let data = action.payload.doc.data() as User;
+          let id = action.payload.doc.id;
+
+          return {
+            id,
+            ...data  // Spread operator, packs out the data in the object & returns it with metadata (ID) and the data (fields) in the post
+          };
+        })
+      });
+
   }
+  */
+  /*
+  createProfile(userID, userName, userNumber) {
+    this.collection.doc(this.userID).update({
+      userID: this.userID,
+      userName: this.userName,
+      userNumber: this.userNumber
+    } as User).then((response) => {
+      // pop up(toast) melding som sier ifra
+
+
+    })
+  } 
   */
 
 }

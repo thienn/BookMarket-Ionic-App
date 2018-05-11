@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { MyPostsPage } from '../pages/my-posts/my-posts';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
 
 @Component({
   templateUrl: 'app.html'
@@ -36,7 +37,8 @@ export class MyApp {
     // List of pages that can be navigated to
     this.pages = [
       { title: 'Hjem / annonser', component: HomePage },
-      { title: 'Mine annonser', component: MyPostsPage}
+      { title: 'Mine annonser', component: MyPostsPage},
+      { title: 'Brukerprofil', component: UserProfilePage}
     ];
 
 
